@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sri Ganesh S — Data Science Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #0d0d0f; --ink2: #1c1c22; --ink3: #2e2e38;
+  --paper: #f7f5f0; --paper2: #eeebe3; --paper3: #e4e0d6;
+  --gold: #b8860b; --gold-light: #d4a017; --gold-pale: #f5edcc;
+  --teal: #0d6e6e; --teal-light: #0f8f8f; --teal-pale: #d4eeee;
+  --border: rgba(13,13,15,0.1); --border2: rgba(13,13,15,0.18);
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'IBM Plex Sans', sans-serif; background: var(--paper); color: var(--ink); line-height: 1.6; font-size: 15px; }
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(247,245,240,0.93); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border2);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 3.5rem; height: 60px;
+}
+.logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--ink); text-decoration: none; }
+.logo em { color: var(--gold); font-style: normal; }
+.nav-links { display: flex; gap: 2.5rem; }
+.nav-links a { font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink3); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: var(--gold); }
+.nav-cta { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--paper); background: var(--ink); padding: 8px 20px; border-radius: 3px; text-decoration: none; transition: background 0.2s; }
+.nav-cta:hover { background: var(--ink3); }
+
+.hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 400px; padding-top: 60px; }
+.hero-left { padding: 7rem 4rem 5rem; display: flex; flex-direction: column; justify-content: center; border-right: 1px solid var(--border2); }
+.hero-eyebrow { display: flex; align-items: center; gap: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--teal); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 2rem; }
+.hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--teal); }
+.hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(3.2rem, 6vw, 5.2rem); font-weight: 900; line-height: 1.0; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 0.4rem; }
+.hero-subtitle { font-family: 'Playfair Display', serif; font-size: clamp(1.1rem, 2vw, 1.5rem); font-weight: 400; font-style: italic; color: var(--gold); margin-bottom: 2rem; }
+.hero-desc { font-size: 1rem; font-weight: 300; color: var(--ink3); max-width: 480px; line-height: 1.8; margin-bottom: 3rem; border-left: 2px solid var(--gold); padding-left: 1.25rem; }
+.hero-actions { display: flex; gap: 1rem; }
+.btn-solid { display: inline-flex; align-items: center; gap: 8px; padding: 0.8rem 2rem; background: var(--ink); color: var(--paper); font-size: 13px; font-weight: 500; letter-spacing: 0.04em; text-decoration: none; border-radius: 3px; transition: background 0.2s; }
+.btn-solid:hover { background: var(--ink3); }
+.btn-outline { display: inline-flex; align-items: center; gap: 8px; padding: 0.8rem 2rem; border: 1px solid var(--border2); color: var(--ink3); font-size: 13px; text-decoration: none; border-radius: 3px; transition: border-color 0.2s, color 0.2s; }
+.btn-outline:hover { border-color: var(--ink); color: var(--ink); }
+
+.hero-right { background: var(--ink); padding: 5rem 2.5rem; display: flex; flex-direction: column; }
+.profile-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--paper); margin-bottom: 4px; }
+.profile-role { font-size: 11px; font-weight: 400; color: rgba(247,245,240,0.45); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2rem; }
+.info-divider { height: 1px; background: rgba(247,245,240,0.08); margin: 1.25rem 0; }
+.info-label { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(247,245,240,0.3); margin-bottom: 4px; font-family: 'IBM Plex Mono', monospace; }
+.info-value { font-size: 13px; color: rgba(247,245,240,0.8); font-weight: 300; }
+.info-value a { color: var(--gold-light); text-decoration: none; }
+.status-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #4ade80; margin-right: 6px; animation: blink 2s infinite; }
+@keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(247,245,240,0.08); margin-top: 2rem; border: 1px solid rgba(247,245,240,0.08); border-radius: 4px; overflow: hidden; }
+.stat-box { background: var(--ink); padding: 1.25rem 1rem; text-align: center; }
+.stat-n { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--paper); line-height: 1; margin-bottom: 4px; }
+.stat-l { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(247,245,240,0.35); }
+
+section { padding: 6rem 3.5rem; }
+.max-w { max-width: 1100px; margin: 0 auto; }
+.kicker { display: flex; align-items: center; gap: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.6rem; }
+.kicker::before { content: '//'; opacity: 0.45; }
+h2.st { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; letter-spacing: -0.02em; color: var(--ink); line-height: 1.15; margin-bottom: 0.5rem; }
+.sb { font-size: 0.95rem; color: var(--ink3); font-weight: 300; max-width: 500px; line-height: 1.75; }
+.sh { margin-bottom: 3.5rem; }
+
+/* ABOUT */
+#about { background: var(--paper2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+.about-text p { font-size: 0.97rem; font-weight: 300; color: var(--ink3); line-height: 1.85; margin-bottom: 1.2rem; }
+.about-text p strong { font-weight: 600; color: var(--ink); }
+.strength-item { display: grid; grid-template-columns: 18px 1fr; gap: 12px; padding: 1rem 0; border-bottom: 1px solid var(--border); align-items: start; }
+.strength-item:first-child { border-top: 1px solid var(--border); }
+.s-icon { color: var(--gold); font-size: 10px; margin-top: 4px; }
+.s-name { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 2px; }
+.s-desc { font-size: 12px; color: var(--ink3); font-weight: 300; line-height: 1.6; }
+
+/* SKILLS */
+#skills { background: var(--paper); }
+.skills-layout { display: grid; grid-template-columns: 260px 1fr; gap: 4rem; }
+.skill-nav-item { display: flex; align-items: center; gap: 12px; padding: 0.7rem 0; border-bottom: 1px solid var(--border); }
+.sn-num { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: rgba(13,13,15,0.25); width: 20px; }
+.sn-name { font-size: 13px; font-weight: 500; color: var(--ink3); }
+.skill-group { margin-bottom: 2.75rem; padding-bottom: 2.75rem; border-bottom: 1px solid var(--border); }
+.skill-group:last-child { border-bottom: none; margin-bottom: 0; }
+.sg-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--ink); margin-bottom: 1rem; }
+.pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.pill { font-size: 12px; font-weight: 500; padding: 6px 14px; border-radius: 2px; letter-spacing: 0.02em; }
+.p-ink { background: var(--ink); color: var(--paper); }
+.p-gold { background: var(--gold-pale); color: var(--gold); border: 1px solid rgba(184,134,11,0.2); }
+.p-teal { background: var(--teal-pale); color: var(--teal); border: 1px solid rgba(13,110,110,0.2); }
+.p-out { background: transparent; color: var(--ink3); border: 1px solid var(--border2); }
+
+/* PROJECTS */
+#projects { background: var(--ink); }
+#projects .kicker { color: var(--gold-light); }
+#projects h2.st { color: var(--paper); }
+#projects .sb { color: rgba(247,245,240,0.5); }
+.proj-list { display: flex; flex-direction: column; gap: 1px; background: rgba(247,245,240,0.06); border: 1px solid rgba(247,245,240,0.06); border-radius: 4px; overflow: hidden; }
+.proj-row { display: grid; grid-template-columns: 56px 1fr 155px; background: var(--ink2); transition: background 0.2s; }
+.proj-row:hover { background: var(--ink3); }
+.proj-num { display: flex; align-items: flex-start; justify-content: center; padding: 2.25rem 0; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: rgba(247,245,240,0.18); border-right: 1px solid rgba(247,245,240,0.05); }
+.proj-body { padding: 2rem; }
+.ptags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 0.75rem; }
+.ptag { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 10px; border-radius: 2px; }
+.pt-gold { background: rgba(184,134,11,0.15); color: var(--gold-light); }
+.pt-teal { background: rgba(13,110,110,0.18); color: #4dc4c4; }
+.pt-gray { background: rgba(247,245,240,0.06); color: rgba(247,245,240,0.38); }
+.proj-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: var(--paper); margin-bottom: 0.65rem; line-height: 1.25; }
+.proj-desc { font-size: 0.875rem; font-weight: 300; color: rgba(247,245,240,0.55); line-height: 1.75; max-width: 660px; }
+.proj-blist { list-style: none; margin-top: 1rem; display: flex; flex-direction: column; gap: 5px; }
+.proj-blist li { font-size: 12px; font-weight: 300; color: rgba(247,245,240,0.45); padding-left: 1rem; position: relative; line-height: 1.6; }
+.proj-blist li::before { content: '→'; position: absolute; left: 0; color: var(--gold-light); font-size: 10px; top: 1px; }
+.proj-tools { padding: 2rem 1.5rem; display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-start; gap: 6px; border-left: 1px solid rgba(247,245,240,0.05); }
+.tool-chip { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: rgba(247,245,240,0.3); background: rgba(247,245,240,0.04); padding: 4px 10px; border-radius: 2px; white-space: nowrap; }
+
+/* EXPERIENCE */
+#experience { background: var(--paper2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.exp-list { display: flex; flex-direction: column; }
+.exp-item { display: grid; grid-template-columns: 230px 1px 1fr; gap: 0 3rem; padding: 3.5rem 0; border-bottom: 1px solid var(--border); }
+.exp-item:first-child { padding-top: 0; }
+.exp-item:last-child { border-bottom: none; padding-bottom: 0; }
+.exp-company { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.exp-period { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--teal); letter-spacing: 0.05em; margin-bottom: 8px; }
+.exp-dur { display: inline-block; font-size: 11px; font-weight: 500; color: var(--gold); background: var(--gold-pale); padding: 3px 10px; border-radius: 2px; }
+.exp-line { background: var(--border2); position: relative; }
+.exp-line::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 9px; height: 9px; border-radius: 50%; background: var(--gold); border: 2px solid var(--paper2); }
+.exp-role { font-size: 1rem; font-weight: 600; color: var(--ink); margin-bottom: 1.25rem; }
+.exp-blist { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.exp-blist li { font-size: 0.875rem; font-weight: 300; color: var(--ink3); padding-left: 1.25rem; position: relative; line-height: 1.65; }
+.exp-blist li::before { content: ''; position: absolute; left: 0; top: 10px; width: 6px; height: 1px; background: var(--gold); }
+
+/* EDUCATION */
+#education { background: var(--paper); }
+.edu-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
+.edu-sub { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.5rem; }
+.edu-entry { padding: 1.75rem 0; border-bottom: 1px solid var(--border); }
+.edu-entry:first-child { border-top: 1px solid var(--border); }
+.edu-deg { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.edu-inst { font-size: 13px; font-weight: 500; color: var(--teal); margin-bottom: 4px; }
+.edu-yr { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: rgba(13,13,15,0.38); letter-spacing: 0.06em; }
+.cert-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+.cert-item { background: var(--paper); padding: 1.2rem 1.5rem; display: flex; align-items: flex-start; gap: 1rem; }
+.cert-badge { width: 36px; height: 36px; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+.cb-gold { background: var(--gold-pale); }
+.cb-teal { background: var(--teal-pale); }
+.cert-name { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 2px; }
+.cert-issuer { font-size: 11px; color: var(--ink3); font-weight: 300; }
+
+/* CONTACT */
+#contact { background: var(--paper2); border-top: 1px solid var(--border); }
+.contact-split { display: grid; grid-template-columns: 1fr 400px; gap: 5rem; align-items: start; }
+.c-heading { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; line-height: 1.05; letter-spacing: -0.03em; color: var(--ink); margin-bottom: 1.5rem; }
+.c-heading em { color: var(--gold); font-style: italic; }
+.c-note { font-size: 1rem; font-weight: 300; color: var(--ink3); line-height: 1.8; max-width: 400px; }
+.c-box { background: var(--ink); border-radius: 6px; padding: 2.5rem; display: flex; flex-direction: column; }
+.c-detail { padding: 1rem 0; border-bottom: 1px solid rgba(247,245,240,0.07); display: flex; flex-direction: column; gap: 3px; }
+.c-detail:last-child { border-bottom: none; padding-bottom: 0; }
+.c-detail:first-child { padding-top: 0; }
+.c-lbl { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(247,245,240,0.28); }
+.c-val { font-size: 14px; font-weight: 400; color: rgba(247,245,240,0.82); }
+.c-val a { color: var(--gold-light); text-decoration: none; }
+.c-val a:hover { text-decoration: underline; }
+
+footer { background: var(--ink); border-top: 1px solid rgba(247,245,240,0.06); padding: 1.75rem 3.5rem; display: flex; justify-content: space-between; align-items: center; }
+.f-name { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--paper); }
+.f-note { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: rgba(247,245,240,0.28); letter-spacing: 0.08em; }
+
+@media (max-width: 900px) {
+  nav { padding: 0 1.5rem; } .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; } .hero-right { display: none; }
+  .hero-left { padding: 6rem 1.5rem 4rem; }
+  section { padding: 4rem 1.5rem; }
+  .about-grid, .skills-layout, .edu-layout, .contact-split { grid-template-columns: 1fr; gap: 3rem; }
+  .exp-item { grid-template-columns: 1fr; gap: 0.5rem; } .exp-line { display: none; }
+  .proj-row { grid-template-columns: 1fr; } .proj-num, .proj-tools { display: none; }
+  footer { flex-direction: column; gap: 0.5rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="#">Sri Ganesh<em>.</em></a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#experience">Experience</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a class="nav-cta" href="mailto:sriganesh449@gmail.com">Hire Me</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Data Science · Analytics · Visualization</div>
+    <h1>Sri Ganesh S</h1>
+    <div class="hero-subtitle">Turning data into decisions.</div>
+    <p class="hero-desc">
+      A detail-oriented data science professional with hands-on experience in data validation, exploratory analysis, and interactive dashboard development. Proficient in Python, SQL, Power BI, and Excel — trained at Besant Technologies, Chennai.
+    </p>
+    <div class="hero-actions">
+      <a class="btn-solid" href="#projects">View Projects →</a>
+      <a class="btn-outline" href="#contact">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="profile-name">Sri Ganesh S</div>
+    <div class="profile-role">Data Science Professional · Chennai, India</div>
+    <div class="info-label">Status</div>
+    <div class="info-value"><span class="status-dot"></span>Open to opportunities</div>
+    <div class="info-divider"></div>
+    <div class="info-label">Email</div>
+    <div class="info-value"><a href="mailto:sriganesh449@gmail.com">sriganesh449@gmail.com</a></div>
+    <div class="info-divider"></div>
+    <div class="info-label">Phone</div>
+    <div class="info-value">+91 93604 82330</div>
+    <div class="info-divider"></div>
+    <div class="info-label">Location</div>
+    <div class="info-value">Chennai, Tamil Nadu, India</div>
+    <div class="info-divider"></div>
+    <div class="info-label">Education</div>
+    <div class="info-value">BCA · Agurchand Manmull Jain College (2020–2023)</div>
+    <div class="info-divider"></div>
+    <div class="info-label">Training</div>
+    <div class="info-value">Data Science & AI · Besant Technologies, Chennai</div>
+    <div class="stat-grid">
+      <div class="stat-box"><div class="stat-n">2+</div><div class="stat-l">Yrs Exp.</div></div>
+      <div class="stat-box"><div class="stat-n">3</div><div class="stat-l">Certifications</div></div>
+      <div class="stat-box"><div class="stat-n">2</div><div class="stat-l">Companies</div></div>
+      <div class="stat-box"><div class="stat-n">3</div><div class="stat-l">Projects</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="max-w">
+    <div class="about-grid">
+      <div>
+        <div class="sh">
+          <div class="kicker">Who I Am</div>
+          <h2 class="st">Professional Summary</h2>
+        </div>
+        <div class="about-text">
+          <p>A detail-oriented candidate with <strong>hands-on experience gained through training at Besant Technologies, Chennai</strong> in extracting, analyzing, and visualizing data to drive strategic business decisions.</p>
+          <p>Proficient in leveraging advanced tools and technologies such as <strong>Excel, Power BI, and Python</strong> to deliver actionable insights and enhance operational efficiency.</p>
+          <p>Skilled in <strong>data cleaning, transformation, and creating dynamic dashboards</strong> and reports that highlight key performance metrics. Adept at identifying trends, patterns, and opportunities to support data-driven decision-making processes.</p>
+          <p>Proven ability to <strong>communicate complex data findings</strong> clearly and effectively to stakeholders at all levels.</p>
+        </div>
+      </div>
+      <div>
+        <div class="sh">
+          <div class="kicker">Core Strengths</div>
+          <h2 class="st">What Sets Me Apart</h2>
+        </div>
+        <div class="strength-item">
+          <div class="s-icon">◆</div>
+          <div><div class="s-name">Detail-Oriented</div><div class="s-desc">Ensures high accuracy in data collection and result reporting while maintaining quality standards.</div></div>
+        </div>
+        <div class="strength-item">
+          <div class="s-icon">◆</div>
+          <div><div class="s-name">Process-Adherent</div><div class="s-desc">Follows established guidelines, procedures, and SLAs for consistent and compliant task execution.</div></div>
+        </div>
+        <div class="strength-item">
+          <div class="s-icon">◆</div>
+          <div><div class="s-name">Technically Proficient</div><div class="s-desc">Skilled in Microsoft Office tools, Power BI, Python, and internal software for data capture and documentation.</div></div>
+        </div>
+        <div class="strength-item">
+          <div class="s-icon">◆</div>
+          <div><div class="s-name">Effective Communicator</div><div class="s-desc">Capable of clearly reporting issues, escalations, and progress to relevant stakeholder teams.</div></div>
+        </div>
+        <div class="strength-item">
+          <div class="s-icon">◆</div>
+          <div><div class="s-name">Adaptable &amp; Quick Learner</div><div class="s-desc">Comfortable working with dynamic instructions and new task requirements in fast-moving environments.</div></div>
+        </div>
+        <div class="strength-item">
+          <div class="s-icon">◆</div>
+          <div><div class="s-name">Time &amp; Task Management</div><div class="s-desc">Proven ability to meet daily productivity targets without compromising quality.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="max-w">
+    <div class="sh">
+      <div class="kicker">Capabilities</div>
+      <h2 class="st">Technical Skills</h2>
+      <p class="sb">A full-stack analytics toolkit — from raw data ingestion and cleaning through to boardroom-ready visual reporting.</p>
+    </div>
+    <div class="skills-layout">
+      <div>
+        <div class="skill-nav-item"><div class="sn-num">01</div><div class="sn-name">Programming Languages</div></div>
+        <div class="skill-nav-item"><div class="sn-num">02</div><div class="sn-name">Python Libraries</div></div>
+        <div class="skill-nav-item"><div class="sn-num">03</div><div class="sn-name">Applications & Tools</div></div>
+        <div class="skill-nav-item"><div class="sn-num">04</div><div class="sn-name">Data Competencies</div></div>
+        <div class="skill-nav-item"><div class="sn-num">05</div><div class="sn-name">Soft Skills</div></div>
+      </div>
+      <div>
+        <div class="skill-group">
+          <div class="sg-title">01 — Programming Languages</div>
+          <div class="pills"><span class="pill p-ink">Python</span><span class="pill p-ink">SQL</span></div>
+        </div>
+        <div class="skill-group">
+          <div class="sg-title">02 — Python Libraries</div>
+          <div class="pills"><span class="pill p-gold">NumPy</span><span class="pill p-gold">Pandas</span><span class="pill p-gold">Matplotlib</span><span class="pill p-gold">Seaborn</span></div>
+        </div>
+        <div class="skill-group">
+          <div class="sg-title">03 — Applications & Tools</div>
+          <div class="pills"><span class="pill p-teal">Power BI</span><span class="pill p-teal">MS Excel</span><span class="pill p-teal">MS Word</span><span class="pill p-teal">DAX</span></div>
+        </div>
+        <div class="skill-group">
+          <div class="sg-title">04 — Data Competencies</div>
+          <div class="pills">
+            <span class="pill p-out">Data Visualization</span><span class="pill p-out">Data Cleaning</span>
+            <span class="pill p-out">Exploratory Data Analysis</span><span class="pill p-out">Data Validation</span>
+            <span class="pill p-out">Data Transformation</span><span class="pill p-out">Dashboard Development</span>
+            <span class="pill p-out">KPI Reporting</span><span class="pill p-out">Statistical Analysis</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="sg-title">05 — Soft Skills</div>
+          <div class="pills">
+            <span class="pill p-out">Observation</span><span class="pill p-out">Decision Making</span>
+            <span class="pill p-out">Communication</span><span class="pill p-out">Multi-Tasking</span><span class="pill p-out">Status Reporting</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="max-w">
+    <div class="sh">
+      <div class="kicker">Work</div>
+      <h2 class="st">Projects</h2>
+      <p class="sb">Real-world data problems tackled with code, statistics, and purpose-built visualizations.</p>
+    </div>
+    <div class="proj-list">
+
+      <div class="proj-row">
+        <div class="proj-num">01</div>
+        <div class="proj-body">
+          <div class="ptags"><span class="ptag pt-gold">Data Visualization</span><span class="ptag pt-teal">Business Intelligence</span></div>
+          <div class="proj-title">Sales Performance Dashboard</div>
+          <p class="proj-desc">Designed and developed an interactive sales dashboard in Power BI to visualize and track key performance indicators — providing real-time insights for business stakeholders across regions and time periods.</p>
+          <ul class="proj-blist">
+            <li>Tracked KPIs including total revenue, profit margins, regional sales, and product-wise performance</li>
+            <li>Used slicers, filters, and drill-through features to enable user-driven exploration of sales data</li>
+            <li>Applied DAX measures to calculate dynamic aggregations, YoY comparisons, and running totals</li>
+            <li>Delivered real-time insights that reduced dependence on manual reporting for business stakeholders</li>
+          </ul>
+        </div>
+        <div class="proj-tools">
+          <span class="tool-chip">Power BI</span><span class="tool-chip">DAX</span><span class="tool-chip">Excel</span>
+        </div>
+      </div>
+
+      <div class="proj-row">
+        <div class="proj-num">02</div>
+        <div class="proj-body">
+          <div class="ptags"><span class="ptag pt-gold">Exploratory Data Analysis</span><span class="ptag pt-teal">Python</span></div>
+          <div class="proj-title">HHH Electronics & Gadgets — Data Analysis</div>
+          <p class="proj-desc">End-to-end data analysis project on an electronics retail dataset using statistical and computational techniques to extract meaningful business insights.</p>
+          <ul class="proj-blist">
+            <li>Performed thorough data cleaning and preprocessing to handle missing values, duplicates, and type inconsistencies</li>
+            <li>Conducted EDA to identify patterns, trends, and correlations within the dataset</li>
+            <li>Enabled understanding of customer behaviour, market distribution, and product segmentation</li>
+            <li>Delivered a clean, structured dataset ready for advanced analytics or machine learning workflows</li>
+          </ul>
+        </div>
+        <div class="proj-tools">
+          <span class="tool-chip">Python</span><span class="tool-chip">Pandas</span><span class="tool-chip">Seaborn</span><span class="tool-chip">Matplotlib</span>
+        </div>
+      </div>
+
+      <div class="proj-row">
+        <div class="proj-num">03</div>
+        <div class="proj-body">
+          <div class="ptags"><span class="ptag pt-gold">Data Quality</span><span class="ptag pt-gray">Professional · 5 Months</span></div>
+          <div class="proj-title">Market Research Data Validation System</div>
+          <p class="proj-desc">Built and maintained structured data validation workflows for large-scale survey and market research datasets at Maitra Marketing Research Company.</p>
+          <ul class="proj-blist">
+            <li>Ensured accuracy and consistency of large datasets collected through surveys and market research campaigns</li>
+            <li>Performed thorough data cleaning, validation, and formatting using Excel and internal data tools</li>
+            <li>Identified anomalies and outliers in incoming data and coordinated with field teams to resolve discrepancies</li>
+            <li>Collaborated with data analysts to prepare clean datasets for reporting and insights generation</li>
+            <li>Maintained detailed logs of validation processes and supported quality assurance in project deliverables</li>
+            <li>Contributed to improved turnaround time for data processing by streamlining validation workflows</li>
+          </ul>
+        </div>
+        <div class="proj-tools">
+          <span class="tool-chip">Excel</span><span class="tool-chip">Data QA</span><span class="tool-chip">Reporting</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="max-w">
+    <div class="sh">
+      <div class="kicker">Career</div>
+      <h2 class="st">Work Experience</h2>
+      <p class="sb">Professional roles that have sharpened my analytical thinking, operational discipline, and reporting skills.</p>
+    </div>
+    <div class="exp-list">
+
+      <div class="exp-item">
+        <div>
+          <div class="exp-company">Accenture</div>
+          <div class="exp-period">Jun 2025 — Present</div>
+          <span class="exp-dur">Current Role</span>
+        </div>
+        <div class="exp-line"></div>
+        <div>
+          <div class="exp-role">Transport Executive</div>
+          <ul class="exp-blist">
+            <li>Coordinated daily transportation operations, ensuring on-time and cost-effective deliveries</li>
+            <li>Scheduled vehicle dispatches and monitored routes to optimise fleet efficiency</li>
+            <li>Liaised with clients, vendors, and drivers to ensure smooth logistics workflows</li>
+            <li>Maintained compliance with transport regulations and company safety standards</li>
+            <li>Oversaw vehicle maintenance schedules, fuel usage, and transport documentation</li>
+            <li>Prepared and maintained daily, weekly, and monthly transport and logistics reports</li>
+            <li>Analysed transportation data to identify trends, inefficiencies, and areas for improvement</li>
+            <li>Supported management with accurate reporting for audits, budgeting, and performance reviews</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div>
+          <div class="exp-company">Maitra Marketing Research Company</div>
+          <div class="exp-period">Jun 2023 — Nov 2023</div>
+          <span class="exp-dur">5 Months</span>
+        </div>
+        <div class="exp-line"></div>
+        <div>
+          <div class="exp-role">Data Validator</div>
+          <ul class="exp-blist">
+            <li>Ensured the accuracy and consistency of large datasets collected through surveys and market research campaigns</li>
+            <li>Performed thorough data cleaning, validation, and formatting using Excel and internal data tools to maintain high data integrity</li>
+            <li>Identified anomalies and outliers in incoming data and coordinated with field teams to resolve discrepancies</li>
+            <li>Collaborated with data analysts to prepare clean datasets for reporting and insights generation</li>
+            <li>Maintained detailed logs of validation processes and supported quality assurance in project deliverables</li>
+            <li>Contributed to improved turnaround time for data processing by streamlining validation workflows</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="max-w">
+    <div class="sh">
+      <div class="kicker">Background</div>
+      <h2 class="st">Education & Certifications</h2>
+    </div>
+    <div class="edu-layout">
+      <div>
+        <div class="edu-sub">Academic Qualifications</div>
+        <div class="edu-entry">
+          <div class="edu-deg">Bachelor of Computer Applications (BCA)</div>
+          <div class="edu-inst">Agurchand Manmull Jain College</div>
+          <div class="edu-yr">2020 – 2023</div>
+        </div>
+        <div class="edu-entry">
+          <div class="edu-deg">Class XII — Higher Secondary</div>
+          <div class="edu-inst">Madras Christians College Higher Secondary School</div>
+          <div class="edu-yr">2019 – 2020</div>
+        </div>
+      </div>
+      <div>
+        <div class="edu-sub">Professional Certifications</div>
+        <div class="cert-list">
+          <div class="cert-item">
+            <div class="cert-badge cb-teal">🎓</div>
+            <div>
+              <div class="cert-name">Data Science & Artificial Intelligence</div>
+              <div class="cert-issuer">Besant Technologies, Chennai</div>
+            </div>
+          </div>
+          <div class="cert-item">
+            <div class="cert-badge cb-gold">📊</div>
+            <div>
+              <div class="cert-name">MS Office — Word & Excel</div>
+              <div class="cert-issuer">Computer Applications Certification</div>
+            </div>
+          </div>
+          <div class="cert-item">
+            <div class="cert-badge cb-gold">💻</div>
+            <div>
+              <div class="cert-name">Computer Basics</div>
+              <div class="cert-issuer">Foundation Computing Certification</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="max-w">
+    <div class="contact-split">
+      <div>
+        <div class="kicker">Get in Touch</div>
+        <h2 class="c-heading">Let's work<br><em>together.</em></h2>
+        <p class="c-note">Open to full-time data science roles, data analyst positions, Power BI development, and freelance analytics projects. Currently based in Chennai, Tamil Nadu, India.</p>
+      </div>
+      <div class="c-box">
+        <div class="c-detail">
+          <div class="c-lbl">Email</div>
+          <div class="c-val"><a href="mailto:sriganesh449@gmail.com">sriganesh449@gmail.com</a></div>
+        </div>
+        <div class="c-detail">
+          <div class="c-lbl">Phone</div>
+          <div class="c-val"><a href="tel:+919360482330">+91 93604 82330</a></div>
+        </div>
+        <div class="c-detail">
+          <div class="c-lbl">LinkedIn</div>
+          <div class="c-val"><a href="https://linkedin.com" target="_blank">linkedin.com/in/sriganesh</a></div>
+        </div>
+        <div class="c-detail">
+          <div class="c-lbl">GitHub</div>
+          <div class="c-val"><a href="https://github.com" target="_blank">github.com/sriganesh</a></div>
+        </div>
+        <div class="c-detail">
+          <div class="c-lbl">Location</div>
+          <div class="c-val">Chennai, Tamil Nadu, India</div>
+        </div>
+        <div class="c-detail">
+          <div class="c-lbl">Availability</div>
+          <div class="c-val"><span class="status-dot"></span>Open to opportunities</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-name">Sri Ganesh S</div>
+  <div class="f-note">Data Science Portfolio · Chennai, India · 2025</div>
+</footer>
+
+</body>
+</html>
